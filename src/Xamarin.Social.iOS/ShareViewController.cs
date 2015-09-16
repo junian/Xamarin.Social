@@ -610,7 +610,17 @@ namespace Xamarin.Social
 				ValueLabel.Text = Picker.SelectedItem;
 			}
 
-			void HandleTouchUpInside (object sender, EventArgs e)
+			private UIAlertController accountActionView;
+
+			private void DeleteCurrentAccount()
+			{
+				var account = Controller.accounts.FirstOrDefault (x => x.Username == ValueLabel.Text);
+				Controller.service.DeleteAccount(account);
+				accountActionView.DismissViewController (true, null);
+				Controller.DismissViewController (true, null);
+			}
+
+			void ChangeCurrentAccount()
 			{
 				if (Items.Count > 1) {
 					Controller.ResignFirstResponders ();
@@ -625,6 +635,19 @@ namespace Xamarin.Social
 					#endif
 					v.BringSubviewToFront (Picker);
 				}
+			}
+
+			void HandleTouchUpInside (object sender, EventArgs e)
+			{
+				accountActionView = UIAlertController.Create (null, null, UIAlertControllerStyle.ActionSheet);
+
+				accountActionView.AddAction(UIAlertAction.Create("Change Account",  UIAlertActionStyle.Default,
+					a => ChangeCurrentAccount() ));
+				accountActionView.AddAction(UIAlertAction.Create("Delete Account", UIAlertActionStyle.Destructive,
+					a => DeleteCurrentAccount() ));
+				accountActionView.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel,
+					null ));
+				Controller.PresentViewController (accountActionView, true, null);
 			}
 		}
 
