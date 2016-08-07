@@ -41,10 +41,10 @@
     <Reference Include="System.Json" />
     <Reference Include="Mono.Android" />
     <Reference Include="Xamarin.Mobile">
-      <HintPath>..\Components\xamarin.mobile-0.7.5\lib\android\Xamarin.Mobile.dll</HintPath>
+      <HintPath>$(SolutionDir)\Components\xamarin.mobile-0.7.5\lib\android\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ItemGroup>
     <Compile Include="..\Xamarin.Social\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
